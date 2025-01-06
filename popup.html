@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <h2>Enter GitHub Token</h2>
+  <form id="settings-form">
+    <label for="token">GitHub Token:</label>
+    <input type="password" id="token" name="token" required>
+    <button type="submit">Save</button>
+  </form>
+  <div id="message"></div>
+  <script src="dist/popup.js"></script>
+</body>
+</html>

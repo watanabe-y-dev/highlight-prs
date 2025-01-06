@@ -1,0 +1,29 @@
+{
+    "manifest_version": 3,
+    "name": "Highlight assigned PRs",
+    "version": "1.0",
+    "description": "Highlight PRs assigned to review in GitHub",
+    "permissions": [
+        "activeTab",
+        "storage"
+    ],
+    "host_permissions": [
+        "*://github.com/*"
+    ],
+    "background": {
+        "service_worker": "dist/background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://github.com/*"
+            ],
+            "js": [
+                "dist/content.js"
+            ]
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html"
+    }
+}
