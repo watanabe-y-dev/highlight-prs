@@ -64,6 +64,4 @@ const highlightAssignedPRs = async (token: string): Promise<void> => {
   });
 }
 
-chrome.storage.sync.get("githubToken", (data) => {
-  highlightAssignedPRs("MY_GITHUB_TOKEN");
-});
+highlightAssignedPRs("MY_GITHUB_TOKEN");
