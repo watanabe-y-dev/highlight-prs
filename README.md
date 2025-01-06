@@ -5,7 +5,7 @@ Github の PR 画面を開いたとき、自分がレビュアーとして登録
 
 # 使い方
 
-1. Github トークンの登録
+### 1. Github トークンの登録
 
 `src/content.ts` 内の以下の部分に自分の Github トークンを入力してください。
 
@@ -15,7 +15,7 @@ chrome.storage.sync.get("githubToken", (data) => {
 });
 ```
 
-2. パッケージのインストール
+### 2. パッケージのインストール
 
 以下のコマンドでパッケージをインストールします。
 
@@ -23,7 +23,7 @@ chrome.storage.sync.get("githubToken", (data) => {
 $ npm install
 ```
 
-3. tsc コマンドの実行
+### 3. tsc コマンドの実行
 
 プロジェクトルートで `tsc` コマンドを実行して Typescript をコンパイルしてください。
 `tsc` は Typescript をインストールすれば使えるようになります。
@@ -34,7 +34,7 @@ $ npm install -g typescript
 
 `tsc` を実行すると `dist` ディレクトリにコンパイルされた js ファイルが生成されます。
 
-4. Chrome 拡張に登録
+### 4. Chrome 拡張に登録
 
 Chorme の URL バーに `chrome://extensions/` を入力する。<br>
 表示された画面の右上にある「デベロッパーモード」をオンにする。<br>
