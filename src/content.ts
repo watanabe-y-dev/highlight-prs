@@ -108,5 +108,7 @@ const highlightAssignedPRs = async (): Promise<void> => {
 
 // ページ読み込み時に実行
 window.onload = () => {
-  highlightAssignedPRs();
+  if (window.location.pathname.includes("/pulls")) {
+    highlightAssignedPRs();
+  }
 }
