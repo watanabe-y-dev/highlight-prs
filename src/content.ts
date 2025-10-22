@@ -50,6 +50,16 @@ const getPRsOpened = async (token: string): Promise<PullRequest[]> => {
         Authorization: `Bearer ${token}`,
       },
     });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("GitHub API エラー:");
+      console.error("  ステータス:", response.status);
+      console.error("  URL:", url);
+      console.error("  詳細:", errorData);
+      return [];
+    }
+
     const data = await response.json();
     return data as PullRequest[];
   } catch (error) {
