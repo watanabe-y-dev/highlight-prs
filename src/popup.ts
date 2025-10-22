@@ -8,16 +8,39 @@ const generateSecretKey = (): string => {
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("settings-form") as HTMLFormElement;
   const message = document.getElementById("message") as HTMLElement;
+  const status = document.getElementById("status") as HTMLElement;
   const saveButton = document.getElementById("save-button") as HTMLButtonElement;
   const tokenInput = document.getElementById("token") as HTMLInputElement;
 
+  // 登録状態を表示する関数
+  const showStatus = async () => {
+    try {
+      const { githubToken, secretKey } = await chrome.storage.local.get(["githubToken", "secretKey"]);
+
+      if (githubToken && secretKey) {
+        status.textContent = "✓ トークンが登録されています";
+        status.className = "message success";
+        status.style.display = "block";
+      } else {
+        status.textContent = "⚠ トークンが登録されていません";
+        status.className = "message error";
+        status.style.display = "block";
+      }
+    } catch (error) {
+      console.error("登録状態の確認に失敗しました:", error);
+    }
+  };
+
   // シークレットキーの取得または生成
-  chrome.storage.local.get("secretKey", (data) => {
+  chrome.storage.local.get("secretKey", async (data) => {
     let secretKey = data.secretKey;
     if (!secretKey) {
       secretKey = generateSecretKey();
-      chrome.storage.local.set({ secretKey });
+      await chrome.storage.local.set({ secretKey });
     }
+
+    // 登録状態を表示
+    showStatus();
   });
 
   // 保存済みのトークンを表示
@@ -76,11 +99,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const encryptedToken = encryptToken(token, secretKey);
       await chrome.storage.local.set({ githubToken: encryptedToken });
-      
+
       showMessage("トークンが保存されました", "success");
       tokenInput.type = "text";
       tokenInput.value = "********";
       saveButton.classList.add("has-token");
+
+      // 登録状態を更新
+      showStatus();
     } catch (error) {
       console.error("トークンの保存に失敗しました:", error);
       showMessage("トークンの保存に失敗しました", "error");
@@ -110,31 +136,3 @@ const encryptToken = (token: string, secretKey: string): string => {
   }
 }
 
-// トークンの復号
-const decryptToken = (encryptedToken: string, secretKey: string): string => {
-  try {
-    const bytes = CryptoJS.AES.decrypt(encryptedToken, secretKey);
-    const decrypted = bytes.toString(CryptoJS.enc.Utf8);
-    if (!decrypted) {
-      throw new Error("復号化に失敗しました");
-    }
-    return decrypted;
-  } catch (error) {
-    console.error("トークンの復号に失敗しました:", error);
-    throw error;
-  }
-}
-
-// トークンの取得
-const getToken = async (): Promise<string | null> => {
-  try {
-    const { githubToken, secretKey } = await chrome.storage.local.get(["githubToken", "secretKey"]);
-    if (!githubToken || !secretKey) {
-      return null;
-    }
-    return decryptToken(githubToken, secretKey);
-  } catch (error) {
-    console.error("トークンの取得に失敗しました:", error);
-    return null;
-  }
-}

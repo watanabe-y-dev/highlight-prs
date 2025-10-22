@@ -108,6 +108,11 @@
       text-align: center;
     }
 
+    #status {
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+
     .success {
       background-color: #d4edda;
       color: #155724;
@@ -189,6 +194,7 @@
 <body>
   <div class="container">
     <h1>GitHub PR ハイライター</h1>
+    <div id="status" class="message" style="display: none;"></div>
     <form id="settings-form">
       <div class="form-group">
         <label for="token">GitHub Personal Access Token</label>
@@ -217,6 +223,6 @@
       </div>
     </div>
   </div>
-  <script src="popup.js"></script>
+  <script src="dist/popup.js"></script>
 </body>
 </html> 
