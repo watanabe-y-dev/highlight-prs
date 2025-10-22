@@ -1,7 +1,11 @@
 {
+  "scripts": {
+    "build": "esbuild src/popup.ts src/content.ts --bundle --outdir=dist --format=iife --platform=browser"
+  },
   "devDependencies": {
     "@types/chrome": "^0.0.289",
-    "@types/crypto-js": "^4.2.2"
+    "@types/crypto-js": "^4.2.2",
+    "esbuild": "^0.25.11"
   },
   "dependencies": {
     "crypto-js": "^4.2.0"
